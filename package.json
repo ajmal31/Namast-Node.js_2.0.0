@@ -1,0 +1,16 @@
+{
+  "name": "dev_tinder",
+  "version": "1.0.0",
+  "description": "Tinder for Devs",
+  "main": "index.js",
+  "scripts": {
+    "start":"node src/app.js",
+    "dev":"nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ajl",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
