@@ -1,24 +1,32 @@
 const express = require("express");
-const { AdminAuth } = require("./middlewares/adminAuth");
-const { userAuth } = require("./middlewares/userAuth");
-const { errorHandler } = require("./middlewares/errorHandler");
+const { connectDb } = require("./config/db");
+const { UserModel } = require("./model/user");
 
 const app = express();
 
-app.use('/admin',AdminAuth)
-app.use("/user",userAuth)
+//JSON cnvert into JS object then update the req object
+app.use(express.json());
 
-// Whenever use use 4 parmeters of route handler/middlware it work request comes phase because request doest no have any error 
-// but if not have 4 parameters it will work becasuse it'error handling it's doing somthing
+app.post("/signup", async (req, res) => {
+  const data = req.body;
+  const user = new UserModel(data);
 
-app.get("/user/data", (req, res, next) => {
-  console.log("first");
-  throw new Error("shdfkjds")
-  res.send("User Route handler")
+  try {
+    const response = await user.save();
+    return res.send(response);
+  } catch (err) {
+    res.status(400).send("Error occured while saving user");
+  }
 });
 
-app.use(errorHandler)
-
-app.listen(3000, () => {
-  console.log("Server is listening on port 3000");
-});
+//Connect DB
+connectDb()
+  .then(() => {
+    console.log("mongodb connection succesfull");
+    app.listen(3000, () => {
+      console.log("Server is listening on port 3000");
+    });
+  })
+  .catch((err) => {
+    console.log("mongodb not connected");
+  });
