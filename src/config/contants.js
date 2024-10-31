@@ -1,4 +1,7 @@
-const URI="mongodb+srv://ajmalmuhammed846:ajuZ3216@cluster0.uzyffxb.mongodb.net/DevTinder?retryWrites=true&w=majority"
+const dotenv=require("dotenv")
+dotenv.config()
+
+const URI=process.env.DB_URI
 
 module.exports={
     URI

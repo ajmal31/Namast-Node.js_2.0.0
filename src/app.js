@@ -7,6 +7,7 @@ const app = express();
 //JSON cnvert into JS object then update the req object
 app.use(express.json());
 
+
 app.post("/signup", async (req, res) => {
   const data = req.body;
   const user = new UserModel(data);
